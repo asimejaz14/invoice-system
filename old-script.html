@@ -1,0 +1,83 @@
+// Function to calculate totals
+function calculateTotals() {
+const itemRows = document.querySelectorAll('.item-row');
+let subtotal = 0;
+itemRows.forEach(row => {
+const quantity = parseFloat(row.querySelector('.quantity').value) || 0;
+const price = parseFloat(row.querySelector('.price').value) || 0;
+const total = quantity * price;
+row.querySelector('.total').textContent = total.toFixed(2);
+subtotal += total;
+});
+document.getElementById('subtotal').value = subtotal.toFixed(2);
+document.getElementById('grandtotal').value = subtotal.toFixed(2);
+}
+
+// Function to add new item row
+function addItem() {
+const container = document.getElementById('items-container');
+const itemRow = document.createElement('div');
+itemRow.classList.add('item-row');
+itemRow.innerHTML = `
+<input type="text" class="description" placeholder="Description" required>
+<input type="number" class="quantity" placeholder="Quantity" required oninput="calculateTotals()">
+<input type="number" class="price" placeholder="Price" required oninput="calculateTotals()">
+<span class="total">0.00</span>
+<button type="button" class="remove-item" onclick="removeItem(this)">Remove</button>
+`;
+container.appendChild(itemRow);
+}
+
+// Function to remove an item row
+function removeItem(button) {
+button.parentElement.remove();
+calculateTotals(); // Recalculate totals after removal
+}
+
+// Event listener for form submission
+document.getElementById('invoice-form').addEventListener('submit', function(event) {
+event.preventDefault();
+
+// Collect the invoice data
+const invoiceData = {
+date: document.getElementById('date').value,
+items: [],
+subtotal: document.getElementById('subtotal').value,
+grandTotal: document.getElementById('grandtotal').value
+};
+
+document.querySelectorAll('.item-row').forEach((row, index) => {
+invoiceData.items.push({
+no: index + 1,
+description: row.querySelector('.description').value,
+quantity: row.querySelector('.quantity').value,
+price: row.querySelector('.price').value,
+total: row.querySelector('.total').textContent
+});
+});
+
+// Create the PDF
+const { jsPDF } = window.jspdf;
+const pdf = new jsPDF();
+
+pdf.text('INVOICE', 105, 20, null, null, 'center');
+pdf.text(`Date: ${invoiceData.date}`, 20, 30);
+
+let startY = 40;
+invoiceData.items.forEach(item => {
+pdf.text(`${item.no}. ${item.description}`, 20, startY);
+pdf.text(item.quantity, 70, startY);
+pdf.text(`$${item.price}`, 120, startY);
+pdf.text(`$${item.total}`, 170, startY);
+startY += 10;
+});
+
+pdf.text(`Subtotal: $${invoiceData.subtotal}`, 20, startY + 10);
+pdf.text(`Grand Total: $${invoiceData.grandTotal}`, 20, startY + 20);
+
+// Save the PDF
+pdf.save('invoice.pdf');
+});
+
+// Initial call to add the first item row on page load
+window.onload = addItem;

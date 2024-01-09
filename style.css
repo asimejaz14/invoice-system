@@ -1,0 +1,65 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.invoice-container {
+    max-width: 600px;
+    margin: 2em auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.form-section {
+    margin-bottom: 1em;
+}
+
+.form-section label {
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+.form-section input[type="date"],
+.form-section input[type="text"],
+.form-section input[type="number"],
+.form-section button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 0.5em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.form-section button {
+    background-color: #005792;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.form-section button:hover {
+    background-color: #003d5b;
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 600px) {
+    body {
+        background-color: #fff;
+    }
+
+    .invoice-container {
+        width: 100%;
+        margin: 1em;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    .form-section {
+        margin-bottom: 1em;
+    }
+}

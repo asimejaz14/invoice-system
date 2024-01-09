@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Invoice Generator</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+</head>
+<body>
+<div class="invoice-container">
+  <form id="invoice-form">
+    <div class="form-section">
+      <label for="billTo">Bill To:</label>
+      <input type="text" id="billTo" placeholder="Client's Name" required>
+    </div>
+    <div class="form-section">
+      <label for="date">Date:</label>
+      <input type="date" id="date" required>
+    </div>
+    <div class="form-section" id="items-container">
+      <!-- Item rows will be added here dynamically -->
+    </div>
+    <div class="form-section">
+      <button type="button" id="add-item" onclick="addItem()">Add Item</button>
+    </div>
+    <div class="form-section">
+      <label for="subtotal">Subtotal:</label>
+      <input type="text" id="subtotal" readonly>
+      <label for="grandtotal">Grand Total:</label>
+      <input type="text" id="grandtotal" readonly>
+    </div>
+    <div class="form-section">
+      <button type="submit">Generate Invoice</button>
+    </div>
+  </form>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
